@@ -206,6 +206,29 @@ export const Home = () => {
               items={['Google Ads', 'Marketing Automation', 'Conversion Rate']}
             />
           </div>
+
+          <div className="mt-24 flex justify-center">
+            <Reveal delay={0.2}>
+              <div className="relative group">
+                 {/* Gradient Border/Glow */}
+                 <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full opacity-60 blur-[3px] group-hover:opacity-100 group-hover:blur-[8px] transition-all duration-500" />
+                 
+                 <Button 
+                   to="/servizi"
+                   className="relative !bg-black !rounded-full !px-12 !h-16 flex items-center gap-3 !border-none overflow-hidden"
+                 >
+                   {/* Inner Shine */}
+                   <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-1000 ease-in-out" />
+                   
+                   <span className="text-sm font-black uppercase tracking-[0.25em] text-white group-hover:text-white/90 z-10">
+                     Scopri i Servizi
+                   </span>
+                   <ArrowRight className="w-5 h-5 text-primary-light group-hover:text-white group-hover:translate-x-1 transition-all z-10" />
+                 </Button>
+              </div>
+            </Reveal>
+          </div>
+
         </Container>
       </Section>
 

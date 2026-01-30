@@ -28,15 +28,14 @@ const WebVisual = () => (
       </div>
       
       {/* Content Area with Scan Effect */}
-      <div className="flex-1 p-5 relative overflow-hidden">
-         {/* Skeleton UI */}
-         <div className="space-y-4 opacity-20">
+      <div className="flex-1 p-5 relative overflow-hidden flex items-center justify-center">
+         {/* Skeleton UI (Background) */}
+         <div className="absolute inset-0 p-5 space-y-4 opacity-10 pointer-events-none">
             <div className="flex gap-4">
                <div className="w-16 h-16 rounded-lg bg-white/30" />
                <div className="space-y-2 flex-1 pt-2">
                   <div className="w-full h-2 bg-white/30 rounded-full" />
                   <div className="w-2/3 h-2 bg-white/30 rounded-full" />
-                  <div className="w-1/2 h-2 bg-white/30 rounded-full" />
                </div>
             </div>
             <div className="grid grid-cols-3 gap-2">
@@ -53,21 +52,21 @@ const WebVisual = () => (
            className="absolute left-0 right-0 h-[2px] bg-green-500/80 shadow-[0_0_15px_rgba(34,197,94,0.6)] z-10"
          />
 
-         {/* Score Card Overlay */}
+         {/* Score Card Overlay - FIXED ALIGNMENT */}
          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
-            <div className="relative w-24 h-24">
-               <svg className="w-full h-full -rotate-90">
+            <div className="relative w-28 h-28">
+               <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                   {/* Track */}
-                  <circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="6" fill="none" className="text-white/5" />
+                  <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="6" fill="none" className="text-white/5" />
                   {/* Indicator */}
                   <motion.circle 
-                    cx="48" cy="48" r="42" 
+                    cx="50" cy="50" r="40" 
                     stroke="currentColor" 
                     strokeWidth="6" 
                     fill="none" 
                     className="text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]"
-                    strokeDasharray="264"
-                    strokeDashoffset="264"
+                    strokeDasharray="251.2" // 2 * PI * 40
+                    strokeDashoffset="251.2"
                     whileInView={{ strokeDashoffset: 10 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
@@ -106,8 +105,8 @@ const AppVisual = () => (
      {/* Ambient Glow */}
      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.08),transparent_70%)]" />
 
-     {/* Isometric Stack */}
-     <div className="relative transform-style-3d rotate-x-[60deg] rotate-z-[45deg] scale-90 group-hover:scale-100 transition-transform duration-500">
+     {/* Isometric Stack - INCREASED SPACING */}
+     <div className="relative transform-style-3d rotate-x-[60deg] rotate-z-[45deg] scale-75 md:scale-90 transition-transform duration-500 mt-8">
         
         {/* Layer 1: Database (Bottom) */}
         <motion.div 
@@ -117,40 +116,40 @@ const AppVisual = () => (
         >
            <div className="absolute inset-0 bg-grid-white/[0.05]" />
            <Database size={40} className="text-gray-700 relative z-10" />
-           <div className="absolute -right-12 text-[10px] text-gray-500 font-mono rotate-[-45deg] opacity-0 group-hover:opacity-100 transition-opacity">POSTGRESQL</div>
+           <div className="absolute -right-16 text-[10px] text-gray-500 font-mono rotate-[-90deg] translate-y-8 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">DATABASE</div>
         </motion.div>
 
         {/* Connection Lines */}
         <motion.div 
-           className="absolute top-1/2 left-1/2 w-1 h-16 bg-gradient-to-t from-gray-700 to-primary/50 origin-bottom transform-style-3d"
-           style={{ z: 0, x: -2, y: -2, rotateX: -90, translateZ: 10 }}
+           className="absolute top-1/2 left-1/2 w-0.5 h-32 bg-gradient-to-t from-gray-700 to-primary/50 origin-bottom transform-style-3d"
+           style={{ z: 0, x: -1, y: -1, rotateX: -90, translateZ: 10 }}
         />
 
-        {/* Layer 2: Logic (Middle) */}
+        {/* Layer 2: Logic (Middle) - INCREASED LIFT */}
         <motion.div 
           className="w-32 h-32 bg-[#161620] backdrop-blur-md border border-primary/20 rounded-2xl shadow-xl flex items-center justify-center absolute top-0 left-0"
-          animate={{ z: 40, x: 20, y: -20 }}
-          whileHover={{ z: 60, x: 30, y: -30 }}
-          transition={{ type: "spring", stiffness: 200 }}
+          animate={{ z: 30, x: 15, y: -15 }}
+          whileHover={{ z: 80, x: 40, y: -40 }} // Increased lift
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
            <Server size={40} className="text-primary relative z-10" />
            <div className="absolute inset-0 border-2 border-primary/10 rounded-2xl animate-pulse" />
-           <div className="absolute -right-12 text-[10px] text-primary font-mono rotate-[-45deg] opacity-0 group-hover:opacity-100 transition-opacity">API LAYER</div>
+           <div className="absolute -right-16 text-[10px] text-primary font-mono rotate-[-90deg] translate-y-8 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">API / SERVER</div>
         </motion.div>
 
-        {/* Layer 3: UI (Top) */}
+        {/* Layer 3: UI (Top) - INCREASED LIFT */}
         <motion.div 
           className="w-32 h-32 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-center absolute top-0 left-0"
-          animate={{ z: 80, x: 40, y: -40 }}
-          whileHover={{ z: 120, x: 60, y: -60 }}
-          transition={{ type: "spring", stiffness: 200 }}
+          animate={{ z: 60, x: 30, y: -30 }}
+          whileHover={{ z: 160, x: 80, y: -80 }} // Increased lift significantly
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
            <Layout size={40} className="text-white relative z-10" />
            {/* UI Mockup Details */}
            <div className="absolute top-3 left-3 right-3 h-2 bg-white/20 rounded-full" />
            <div className="absolute top-8 left-3 w-8 h-8 bg-white/10 rounded-full" />
            <div className="absolute top-10 left-14 right-3 h-2 bg-white/10 rounded-full" />
-           <div className="absolute -right-12 text-[10px] text-white font-mono rotate-[-45deg] opacity-0 group-hover:opacity-100 transition-opacity">CLIENT</div>
+           <div className="absolute -right-16 text-[10px] text-white font-mono rotate-[-90deg] translate-y-8 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">FRONTEND</div>
         </motion.div>
      </div>
   </div>
@@ -167,9 +166,9 @@ const DataVisual = () => (
         <div className="w-full h-px bg-white" />
      </div>
 
-     {/* Live Chart Container */}
+     {/* Live Chart Container - FIXED COORDINATES */}
      <div className="relative w-full h-full px-8 pt-12 pb-4">
-        <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
+        <svg className="w-full h-full overflow-visible" viewBox="0 0 300 150" preserveAspectRatio="none">
            <defs>
               <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
                  <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.3" />
@@ -177,16 +176,19 @@ const DataVisual = () => (
               </linearGradient>
            </defs>
            
-           {/* The Line */}
+           {/* 
+              Fixed Path Data 
+              Points: (0,120) -> (60,80) -> (120,100) -> (180,40) -> (240,60) -> (300,20)
+           */}
            <motion.path
-             d="M0,100 C20,90 40,110 60,80 C80,50 100,60 120,40 C140,20 160,30 180,50 C200,70 220,40 240,20 C260,0 280,30 300,10 L300,150 L0,150 Z"
+             d="M0,120 C30,120 30,80 60,80 C90,80 90,100 120,100 C150,100 150,40 180,40 C210,40 210,60 240,60 C270,60 270,20 300,20 L300,150 L0,150 Z"
              fill="url(#chartGradient)"
              initial={{ opacity: 0 }}
              whileInView={{ opacity: 1 }}
              transition={{ duration: 1 }}
            />
            <motion.path
-             d="M0,100 C20,90 40,110 60,80 C80,50 100,60 120,40 C140,20 160,30 180,50 C200,70 220,40 240,20 C260,0 280,30 300,10"
+             d="M0,120 C30,120 30,80 60,80 C90,80 90,100 120,100 C150,100 150,40 180,40 C210,40 210,60 240,60 C270,60 270,20 300,20"
              fill="none"
              stroke="#8B5CF6"
              strokeWidth="3"
@@ -195,13 +197,13 @@ const DataVisual = () => (
              transition={{ duration: 2, ease: "easeInOut" }}
            />
 
-           {/* Data Points */}
+           {/* Data Points - PRECISELY ALIGNED TO PATH ANCHORS */}
            {[
-             { cx: "20%", cy: "53%" },
-             { cx: "40%", cy: "27%" },
-             { cx: "60%", cy: "33%" },
-             { cx: "80%", cy: "13%" },
-             { cx: "100%", cy: "6%" }
+             { cx: 60, cy: 80 },
+             { cx: 120, cy: 100 },
+             { cx: 180, cy: 40 },
+             { cx: 240, cy: 60 },
+             { cx: 300, cy: 20 }
            ].map((point, i) => (
              <motion.circle
                key={i}
@@ -214,7 +216,7 @@ const DataVisual = () => (
                initial={{ scale: 0 }}
                whileInView={{ scale: 1 }}
                transition={{ delay: 1 + i * 0.2 }}
-               className="group-hover:scale-150 transition-transform origin-center"
+               className="group-hover:scale-150 transition-transform origin-center cursor-pointer"
              />
            ))}
         </svg>

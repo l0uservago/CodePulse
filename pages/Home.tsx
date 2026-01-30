@@ -136,8 +136,8 @@ export const Home = () => {
     <>
       <Hero />
 
-      {/* Trust Bar */}
-      <Section className="!py-10 border-y border-white/5">
+      {/* Trust Bar - Important: Added z-index and bg to overlay the parallax hero exit */}
+      <Section className="!py-10 border-y border-white/5 relative z-20 bg-background">
         <Container>
           <div className="flex flex-wrap justify-center md:justify-between items-center gap-12 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
             {['NEXT.JS', 'TYPESCRIPT', 'TAILWIND', 'SUPABASE', 'FRAMER MOTION'].map(tech => (
@@ -148,7 +148,7 @@ export const Home = () => {
       </Section>
 
       {/* Main Process */}
-      <Section id="process">
+      <Section id="process" className="relative z-10">
         <ParticleBackground />
         <Container>
           <SectionTitle 
@@ -206,34 +206,12 @@ export const Home = () => {
               items={['Google Ads', 'Marketing Automation', 'Conversion Rate']}
             />
           </div>
-
-          <div className="mt-24 flex justify-center">
-            <Reveal delay={0.2}>
-              <div className="relative group">
-                 {/* Gradient Border/Glow */}
-                 <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full opacity-60 blur-[3px] group-hover:opacity-100 group-hover:blur-[8px] transition-all duration-500" />
-                 
-                 <Button 
-                   to="/servizi"
-                   className="relative !bg-black !rounded-full !px-12 !h-16 flex items-center gap-3 !border-none overflow-hidden"
-                 >
-                   {/* Inner Shine */}
-                   <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:left-[100%] transition-all duration-1000 ease-in-out" />
-                   
-                   <span className="text-sm font-black uppercase tracking-[0.25em] text-white group-hover:text-white/90 z-10">
-                     Scopri i Servizi
-                   </span>
-                   <ArrowRight className="w-5 h-5 text-primary-light group-hover:text-white group-hover:translate-x-1 transition-all z-10" />
-                 </Button>
-              </div>
-            </Reveal>
-          </div>
-
         </Container>
       </Section>
 
       {/* Final Conversion */}
-      <Section className="relative overflow-hidden">
+      <Section className="relative overflow-hidden z-10">
+        <ParticleBackground />
         <Container>
           <div className="relative p-16 md:p-24 rounded-[3rem] bg-white/[0.02] border border-white/5 overflow-hidden text-center">
             <div className="absolute top-0 left-0 w-full h-full opacity-10">

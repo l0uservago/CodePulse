@@ -2,8 +2,8 @@
 import React from 'react';
 import { Section, Container, SectionTitle, Reveal, Card, Button } from '../components/UIComponents';
 import { SERVICES } from '../constants';
-import { ShieldCheck, Zap, LineChart, Code2, Cpu, Globe, ArrowRight, CheckCircle2, XCircle, Terminal, Server, Rocket, Check } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ShieldCheck, Zap, LineChart, Code2, Cpu, Globe, ArrowRight, CheckCircle2, XCircle, Terminal, Server, Rocket, Check, Database, Cloud, Layout } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 // Fix: Explicitly type TechBadge as a React.FC to ensure children prop is correctly recognized by the JSX parser
 const TechBadge: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -19,6 +19,7 @@ const MAINTENANCE_PLANS = [
     period: "mese",
     description: "La polizza assicurativa per la tua presenza digitale. Dormi sonni tranquilli.",
     features: [
+      "Hosting & Dominio Inclusi",
       "Monitoraggio Uptime 24/7",
       "Aggiornamenti di Sicurezza Critici",
       "Backup Giornaliero Cloud",
@@ -46,38 +47,119 @@ const MAINTENANCE_PLANS = [
 ];
 
 export const Services = () => {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+
   return (
     <>
       {/* Hero Section Premium */}
-      <section className="relative pt-40 pb-24 overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_120%,rgba(139,92,246,0.15),transparent_70%)]" />
+      <section className="relative pt-40 pb-32 overflow-hidden min-h-[70vh] flex items-center">
+        {/* --- BACKGROUND LAYERS --- */}
+        
+        {/* 1. Cyber Grid Perspective */}
+        <div className="absolute inset-0 pointer-events-none perspective-1000">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
           <motion.div 
-            animate={{ 
-              opacity: [0.3, 0.5, 0.3],
-              scale: [1, 1.1, 1]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-24 -right-24 w-96 h-96 bg-primary/20 blur-[120px] rounded-full" 
+            style={{ y: y1 }}
+            className="absolute top-0 left-0 w-full h-[120%] bg-[linear-gradient(to_right,rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:60px_60px] opacity-50 transform perspective-3d rotate-x-60 origin-top"
           />
         </div>
+
+        {/* 2. Ambient Glows */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(139,92,246,0.15),transparent_60%)] pointer-events-none" />
+        
+        {/* 3. Rotating Geometric Systems (Right Side) */}
+        <div className="absolute right-[-10%] top-[10%] w-[800px] h-[800px] pointer-events-none hidden lg:block opacity-30">
+             {/* Outer Ring */}
+             <motion.div 
+               animate={{ rotate: 360 }}
+               transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+               className="absolute inset-0 border border-dashed border-white/10 rounded-full"
+             />
+             {/* Middle Tech Ring */}
+             <motion.div 
+               animate={{ rotate: -360 }}
+               transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+               className="absolute inset-[15%] border border-primary/20 rounded-full border-t-transparent border-l-transparent"
+             />
+             {/* Inner Solid Ring */}
+             <motion.div 
+               animate={{ rotate: 360 }}
+               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+               className="absolute inset-[30%] border-[2px] border-white/5 rounded-full border-b-transparent border-r-transparent"
+             />
+        </div>
+
+        {/* 4. Floating Code Elements (Decorations) */}
+        <motion.div 
+          style={{ y: y2 }}
+          className="absolute right-[15%] top-[20%] hidden lg:flex flex-col gap-6 pointer-events-none z-0"
+        >
+           <motion.div 
+             animate={{ y: [-10, 10, -10], rotate: [0, 5, 0] }}
+             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+             className="p-4 bg-surface/40 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl flex items-center gap-3"
+           >
+              <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400"><Database size={16} /></div>
+              <div className="space-y-1">
+                 <div className="w-20 h-2 bg-white/10 rounded-full" />
+                 <div className="w-12 h-2 bg-white/5 rounded-full" />
+              </div>
+           </motion.div>
+
+           <motion.div 
+             animate={{ y: [10, -10, 10], x: [20, 0, 20] }}
+             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+             className="p-4 bg-surface/40 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl flex items-center gap-3 ml-12"
+           >
+              <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary"><Code2 size={16} /></div>
+              <div className="space-y-1">
+                 <div className="w-24 h-2 bg-white/10 rounded-full" />
+                 <div className="w-16 h-2 bg-white/5 rounded-full" />
+              </div>
+           </motion.div>
+        </motion.div>
+
 
         <Container className="relative z-10">
           <div className="max-w-3xl">
             <Reveal>
-              <span className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 text-primary-light text-xs font-bold tracking-widest uppercase mb-6">
-                ECCELLENZA TECNICA
-              </span>
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-primary-light text-xs font-bold tracking-widest uppercase mb-6 backdrop-blur-sm"
+              >
+                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                Eccellenza Tecnica
+              </motion.div>
+              
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tighter leading-[0.9]">
                 Soluzioni Digitali <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-accent">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-accent relative">
                   Progettate per Scalare
+                  {/* Underline decoration */}
+                  <svg className="absolute w-full h-3 -bottom-1 left-0 text-primary opacity-50" viewBox="0 0 100 10" preserveAspectRatio="none">
+                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="transparent" />
+                  </svg>
                 </span>
               </h1>
-              <p className="text-xl text-gray-400 leading-relaxed mb-10 max-w-2xl">
-                Non costruisco solo siti. Architetti ecosistemi digitali che combinano design d'avanguardia con performance che sfidano i limiti del web moderno.
+              
+              <p className="text-xl text-gray-400 leading-relaxed mb-10 max-w-2xl border-l-2 border-white/10 pl-6">
+                Realizziamo siti web e web app progettati per <strong className="text-white">generare risultati</strong>, con dashboard e sistemi di analytics che trasformano i dati in decisioni concrete.
               </p>
+
+              <div className="flex flex-wrap gap-4">
+                 <div className="flex items-center gap-2 text-xs font-mono text-gray-500 bg-black/40 px-3 py-2 rounded-lg border border-white/5">
+                    <Terminal size={14} className="text-primary" />
+                    <span>git commit -m "init_success"</span>
+                 </div>
+                 <div className="flex items-center gap-2 text-xs font-mono text-gray-500 bg-black/40 px-3 py-2 rounded-lg border border-white/5">
+                    <Zap size={14} className="text-yellow-500" />
+                    <span>Latence: &lt;50ms</span>
+                 </div>
+              </div>
             </Reveal>
           </div>
         </Container>
@@ -91,7 +173,7 @@ export const Services = () => {
               <Reveal key={service.id} delay={idx * 0.1}>
                 <Card className="h-full flex flex-col p-8 group border-white/5 bg-white/[0.02]">
                   <div className="mb-8">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 mb-6 shadow-[0_0_30px_-10px_rgba(139,92,246,0.3)]">
                       <service.icon size={28} />
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">{service.title}</h3>
@@ -177,7 +259,7 @@ export const Services = () => {
                           <div className={`mt-1 w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${plan.isPremium ? 'bg-primary/20 text-primary' : 'bg-white/10 text-gray-400'}`}>
                             <Check size={10} strokeWidth={4} />
                           </div>
-                          <span className={`text-sm ${plan.isPremium ? 'text-gray-200' : 'text-gray-400'}`}>{feat}</span>
+                          <span className="text-sm text-gray-200">{feat}</span>
                         </div>
                       ))}
                     </div>

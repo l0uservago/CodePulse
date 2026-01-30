@@ -1,13 +1,248 @@
 
 import React from 'react';
-import { Section, Container, SectionTitle, Reveal, Card, Button } from '../components/UIComponents';
+import { Section, Container, SectionTitle, Reveal, Button } from '../components/UIComponents';
 import { SERVICES } from '../constants';
-import { ShieldCheck, Zap, LineChart, Code2, Cpu, Globe, ArrowRight, CheckCircle2, XCircle, Terminal, Server, Rocket, Check, Database, Cloud, Layout } from 'lucide-react';
+import { ShieldCheck, Zap, Code2, ArrowRight, Check, Database, Server, Rocket, Terminal, Globe, Cpu, Layout, Gauge, Lock, CheckCircle2, XCircle, BarChart3 } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-// Fix: Explicitly type TechBadge as a React.FC to ensure children prop is correctly recognized by the JSX parser
+// --- PREMIUM VISUAL COMPONENTS ---
+
+const WebVisual = () => (
+  <div className="relative w-full h-64 bg-gradient-to-b from-white/[0.03] to-transparent rounded-t-xl overflow-hidden flex items-center justify-center group-hover:bg-white/[0.06] transition-colors duration-500">
+    {/* Background Grid */}
+    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] opacity-50" />
+    
+    {/* Browser Window */}
+    <motion.div 
+      initial={false}
+      whileHover={{ scale: 1.02, y: -5 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="relative w-72 h-44 bg-[#0B0B10] border border-white/10 rounded-xl shadow-2xl flex flex-col overflow-hidden z-10"
+    >
+      {/* Header */}
+      <div className="h-8 border-b border-white/10 bg-white/5 flex items-center px-4 gap-2">
+         <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+         <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+         <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+         <div className="ml-4 w-32 h-1.5 bg-white/10 rounded-full" />
+      </div>
+      
+      {/* Content Area with Scan Effect */}
+      <div className="flex-1 p-5 relative overflow-hidden">
+         {/* Skeleton UI */}
+         <div className="space-y-4 opacity-20">
+            <div className="flex gap-4">
+               <div className="w-16 h-16 rounded-lg bg-white/30" />
+               <div className="space-y-2 flex-1 pt-2">
+                  <div className="w-full h-2 bg-white/30 rounded-full" />
+                  <div className="w-2/3 h-2 bg-white/30 rounded-full" />
+                  <div className="w-1/2 h-2 bg-white/30 rounded-full" />
+               </div>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+               <div className="h-12 bg-white/30 rounded-lg" />
+               <div className="h-12 bg-white/30 rounded-lg" />
+               <div className="h-12 bg-white/30 rounded-lg" />
+            </div>
+         </div>
+
+         {/* Laser Scan Line */}
+         <motion.div 
+           animate={{ top: ['-20%', '120%'] }}
+           transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+           className="absolute left-0 right-0 h-[2px] bg-green-500/80 shadow-[0_0_15px_rgba(34,197,94,0.6)] z-10"
+         />
+
+         {/* Score Card Overlay */}
+         <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
+            <div className="relative w-24 h-24">
+               <svg className="w-full h-full -rotate-90">
+                  {/* Track */}
+                  <circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="6" fill="none" className="text-white/5" />
+                  {/* Indicator */}
+                  <motion.circle 
+                    cx="48" cy="48" r="42" 
+                    stroke="currentColor" 
+                    strokeWidth="6" 
+                    fill="none" 
+                    className="text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.6)]"
+                    strokeDasharray="264"
+                    strokeDashoffset="264"
+                    whileInView={{ strokeDashoffset: 10 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
+                    strokeLinecap="round"
+                  />
+               </svg>
+               <div className="absolute inset-0 flex items-center justify-center flex-col">
+                 <span className="font-black text-3xl text-white tracking-tighter">99</span>
+                 <span className="text-[8px] font-bold text-green-500 uppercase tracking-widest mt-[-2px]">Score</span>
+               </div>
+            </div>
+         </div>
+      </div>
+    </motion.div>
+
+    {/* Floating Badge */}
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.8, x: 20 }}
+      whileInView={{ opacity: 1, scale: 1, x: 0 }}
+      transition={{ delay: 0.5, type: "spring" }}
+      className="absolute top-12 right-8 z-30"
+    >
+       <div className="bg-[#1A1A23] border border-primary/30 px-3 py-1.5 rounded-lg shadow-[0_10px_20px_-5px_rgba(0,0,0,0.5)] flex items-center gap-2">
+          <div className="relative w-2 h-2">
+             <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75" />
+             <div className="relative w-2 h-2 bg-green-500 rounded-full" />
+          </div>
+          <span className="text-[10px] font-bold text-white tracking-wide font-mono">SEO: 100%</span>
+       </div>
+    </motion.div>
+  </div>
+);
+
+const AppVisual = () => (
+  <div className="relative w-full h-64 bg-gradient-to-b from-white/[0.03] to-transparent rounded-t-xl overflow-hidden flex items-center justify-center perspective-1000 group">
+     {/* Ambient Glow */}
+     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.08),transparent_70%)]" />
+
+     {/* Isometric Stack */}
+     <div className="relative transform-style-3d rotate-x-[60deg] rotate-z-[45deg] scale-90 group-hover:scale-100 transition-transform duration-500">
+        
+        {/* Layer 1: Database (Bottom) */}
+        <motion.div 
+          className="w-32 h-32 bg-[#0F0F16] border border-white/10 rounded-2xl shadow-xl flex items-center justify-center absolute top-0 left-0"
+          style={{ z: 0 }}
+          whileHover={{ z: 0, x: 0, y: 0 }} // Base stays
+        >
+           <div className="absolute inset-0 bg-grid-white/[0.05]" />
+           <Database size={40} className="text-gray-700 relative z-10" />
+           <div className="absolute -right-12 text-[10px] text-gray-500 font-mono rotate-[-45deg] opacity-0 group-hover:opacity-100 transition-opacity">POSTGRESQL</div>
+        </motion.div>
+
+        {/* Connection Lines */}
+        <motion.div 
+           className="absolute top-1/2 left-1/2 w-1 h-16 bg-gradient-to-t from-gray-700 to-primary/50 origin-bottom transform-style-3d"
+           style={{ z: 0, x: -2, y: -2, rotateX: -90, translateZ: 10 }}
+        />
+
+        {/* Layer 2: Logic (Middle) */}
+        <motion.div 
+          className="w-32 h-32 bg-[#161620] backdrop-blur-md border border-primary/20 rounded-2xl shadow-xl flex items-center justify-center absolute top-0 left-0"
+          animate={{ z: 40, x: 20, y: -20 }}
+          whileHover={{ z: 60, x: 30, y: -30 }}
+          transition={{ type: "spring", stiffness: 200 }}
+        >
+           <Server size={40} className="text-primary relative z-10" />
+           <div className="absolute inset-0 border-2 border-primary/10 rounded-2xl animate-pulse" />
+           <div className="absolute -right-12 text-[10px] text-primary font-mono rotate-[-45deg] opacity-0 group-hover:opacity-100 transition-opacity">API LAYER</div>
+        </motion.div>
+
+        {/* Layer 3: UI (Top) */}
+        <motion.div 
+          className="w-32 h-32 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-center absolute top-0 left-0"
+          animate={{ z: 80, x: 40, y: -40 }}
+          whileHover={{ z: 120, x: 60, y: -60 }}
+          transition={{ type: "spring", stiffness: 200 }}
+        >
+           <Layout size={40} className="text-white relative z-10" />
+           {/* UI Mockup Details */}
+           <div className="absolute top-3 left-3 right-3 h-2 bg-white/20 rounded-full" />
+           <div className="absolute top-8 left-3 w-8 h-8 bg-white/10 rounded-full" />
+           <div className="absolute top-10 left-14 right-3 h-2 bg-white/10 rounded-full" />
+           <div className="absolute -right-12 text-[10px] text-white font-mono rotate-[-45deg] opacity-0 group-hover:opacity-100 transition-opacity">CLIENT</div>
+        </motion.div>
+     </div>
+  </div>
+);
+
+const DataVisual = () => (
+  <div className="relative w-full h-64 bg-gradient-to-b from-white/[0.03] to-transparent rounded-t-xl overflow-hidden flex flex-col items-center justify-center group">
+     {/* Grid Lines */}
+     <div className="absolute inset-0 flex flex-col justify-between py-6 px-8 opacity-10 pointer-events-none">
+        <div className="w-full h-px bg-white" />
+        <div className="w-full h-px bg-white" />
+        <div className="w-full h-px bg-white" />
+        <div className="w-full h-px bg-white" />
+        <div className="w-full h-px bg-white" />
+     </div>
+
+     {/* Live Chart Container */}
+     <div className="relative w-full h-full px-8 pt-12 pb-4">
+        <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
+           <defs>
+              <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                 <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.3" />
+                 <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0" />
+              </linearGradient>
+           </defs>
+           
+           {/* The Line */}
+           <motion.path
+             d="M0,100 C20,90 40,110 60,80 C80,50 100,60 120,40 C140,20 160,30 180,50 C200,70 220,40 240,20 C260,0 280,30 300,10 L300,150 L0,150 Z"
+             fill="url(#chartGradient)"
+             initial={{ opacity: 0 }}
+             whileInView={{ opacity: 1 }}
+             transition={{ duration: 1 }}
+           />
+           <motion.path
+             d="M0,100 C20,90 40,110 60,80 C80,50 100,60 120,40 C140,20 160,30 180,50 C200,70 220,40 240,20 C260,0 280,30 300,10"
+             fill="none"
+             stroke="#8B5CF6"
+             strokeWidth="3"
+             initial={{ pathLength: 0 }}
+             whileInView={{ pathLength: 1 }}
+             transition={{ duration: 2, ease: "easeInOut" }}
+           />
+
+           {/* Data Points */}
+           {[
+             { cx: "20%", cy: "53%" },
+             { cx: "40%", cy: "27%" },
+             { cx: "60%", cy: "33%" },
+             { cx: "80%", cy: "13%" },
+             { cx: "100%", cy: "6%" }
+           ].map((point, i) => (
+             <motion.circle
+               key={i}
+               cx={point.cx}
+               cy={point.cy}
+               r="4"
+               fill="#0B0B10"
+               stroke="#8B5CF6"
+               strokeWidth="2"
+               initial={{ scale: 0 }}
+               whileInView={{ scale: 1 }}
+               transition={{ delay: 1 + i * 0.2 }}
+               className="group-hover:scale-150 transition-transform origin-center"
+             />
+           ))}
+        </svg>
+
+        {/* Floating Tooltip */}
+        <motion.div 
+           className="absolute top-4 right-12 bg-surface border border-white/10 p-3 rounded-lg shadow-xl flex flex-col gap-1 z-20"
+           initial={{ opacity: 0, y: 10 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           transition={{ delay: 2.2 }}
+        >
+           <div className="text-[10px] text-gray-400 uppercase tracking-wider font-bold">Real-time Users</div>
+           <div className="flex items-center gap-2">
+              <span className="text-xl font-black text-white">1,248</span>
+              <div className="flex items-center text-[10px] text-green-500 font-bold bg-green-500/10 px-1.5 py-0.5 rounded">
+                 <Rocket size={10} className="mr-1" /> +12%
+              </div>
+           </div>
+        </motion.div>
+     </div>
+  </div>
+);
+
+// --- MAIN COMPONENT ---
+
 const TechBadge: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span className="px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-400 uppercase tracking-tight">
+  <span className="px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-400 uppercase tracking-tight flex items-center gap-1.5 hover:bg-white/10 transition-colors cursor-default">
+    <div className="w-1 h-1 rounded-full bg-primary/50" />
     {children}
   </span>
 );
@@ -51,6 +286,24 @@ export const Services = () => {
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
   const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
+  const getVisual = (id: string) => {
+    switch(id) {
+      case 'siti-web': return <WebVisual />;
+      case 'web-app': return <AppVisual />;
+      case 'dashboard': return <DataVisual />;
+      default: return null;
+    }
+  };
+
+  const getTechStack = (id: string) => {
+    switch(id) {
+      case 'siti-web': return ['Next.js 14', 'Framer Motion', 'Vercel CDN', 'SEO JSON-LD'];
+      case 'web-app': return ['React Query', 'Supabase Auth', 'PostgreSQL', 'Edge Functions'];
+      case 'dashboard': return ['Recharts', 'Real-time Sub', 'Aggregations', 'Data Export'];
+      default: return [];
+    }
+  };
+
   return (
     <>
       {/* Hero Section Premium */}
@@ -71,19 +324,16 @@ export const Services = () => {
         
         {/* 3. Rotating Geometric Systems (Right Side) */}
         <div className="absolute right-[-10%] top-[10%] w-[800px] h-[800px] pointer-events-none hidden lg:block opacity-30">
-             {/* Outer Ring */}
              <motion.div 
                animate={{ rotate: 360 }}
                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
                className="absolute inset-0 border border-dashed border-white/10 rounded-full"
              />
-             {/* Middle Tech Ring */}
              <motion.div 
                animate={{ rotate: -360 }}
                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                className="absolute inset-[15%] border border-primary/20 rounded-full border-t-transparent border-l-transparent"
              />
-             {/* Inner Solid Ring */}
              <motion.div 
                animate={{ rotate: 360 }}
                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -157,7 +407,7 @@ export const Services = () => {
                  </div>
                  <div className="flex items-center gap-2 text-xs font-mono text-gray-500 bg-black/40 px-3 py-2 rounded-lg border border-white/5">
                     <Zap size={14} className="text-yellow-500" />
-                    <span>Latence: &lt;50ms</span>
+                    <span>Latency: &lt;50ms</span>
                  </div>
               </div>
             </Reveal>
@@ -165,40 +415,54 @@ export const Services = () => {
         </Container>
       </section>
 
-      {/* Services Detailed Grid */}
-      <Section darker>
+      {/* Services Premium Grid */}
+      <Section darker className="relative">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
             {SERVICES.map((service, idx) => (
               <Reveal key={service.id} delay={idx * 0.1}>
-                <Card className="h-full flex flex-col p-8 group border-white/5 bg-white/[0.02]">
-                  <div className="mb-8">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 mb-6 shadow-[0_0_30px_-10px_rgba(139,92,246,0.3)]">
-                      <service.icon size={28} />
+                <motion.div 
+                  className="group relative flex flex-col h-full bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-white/10 rounded-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-20px_rgba(139,92,246,0.15)] overflow-hidden"
+                >
+                  {/* Service Visual Header */}
+                  {getVisual(service.id)}
+
+                  <div className="p-8 flex flex-col flex-grow relative z-10">
+                    <div className="flex items-center gap-4 mb-6">
+                       <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                          <service.icon size={24} />
+                       </div>
+                       <h3 className="text-2xl font-bold text-white tracking-tight">{service.title}</h3>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">{service.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed mb-6">
+
+                    <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-grow">
                       {service.description}
                     </p>
-                  </div>
-                  
-                  <div className="space-y-3 mb-8 flex-grow">
-                    {service.features.map((feature, fIdx) => (
-                      <div key={fIdx} className="flex items-center gap-3 text-sm text-gray-300">
-                        <CheckCircle2 size={16} className="text-primary-light shrink-0" />
-                        <span>{feature}</span>
+                    
+                    {/* Tech Specs Block */}
+                    <div className="mb-8 p-4 bg-black/40 rounded-lg border border-white/5">
+                      <div className="flex items-center gap-2 mb-3 text-[10px] font-black uppercase text-gray-500 tracking-widest">
+                         <Cpu size={12} /> Tech Architecture
                       </div>
-                    ))}
-                  </div>
+                      <div className="grid grid-cols-2 gap-y-2">
+                        {getTechStack(service.id).map((tech, tIdx) => (
+                          <div key={tIdx} className="flex items-center gap-2 text-xs text-gray-300 font-mono">
+                             <div className="w-1 h-1 rounded-full bg-primary" /> {tech}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-                  <div className="pt-6 border-t border-white/5">
-                    <div className="flex flex-wrap gap-2">
-                      <TechBadge>Next.js</TechBadge>
-                      <TechBadge>Tailwind</TechBadge>
-                      <TechBadge>Cloudflare</TechBadge>
+                    <div className="space-y-3 pt-6 border-t border-white/5">
+                      {service.features.map((feature, fIdx) => (
+                        <div key={fIdx} className="flex items-center gap-3 text-sm text-gray-300 group/item">
+                          <CheckCircle2 size={16} className="text-gray-600 group-hover/item:text-primary transition-colors shrink-0" />
+                          <span className="group-hover/item:text-white transition-colors">{feature}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </Card>
+                </motion.div>
               </Reveal>
             ))}
           </div>
